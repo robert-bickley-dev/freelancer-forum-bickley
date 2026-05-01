@@ -11,13 +11,7 @@ const OCCUPATIONS = ["Writer", "Teacher", "Programmer", "Designer", "Engineer"];
 const PRICE_RANGE = { min: 20, max: 200 };
 const NUM_FREELANCERS = 100;
 
-// === State ===
-/*
- * **State** refers to data that _might_ change or update during the liftetime
- * of an application. Different HTML is rendered based on the current state.
- */
-
-/** @returns {Freelancer} a quote with a random sentence and random author */
+/** @returns {Freelancer} a Freelancer profile object with name, occupation, rate. */
 function makeFreelancer() {
   const name = NAMES[Math.floor(Math.random() * NAMES.length)];
   const occupation =
@@ -27,4 +21,4 @@ function makeFreelancer() {
   return { name, occupation, rate };
 }
 
-const quotes = Array.from({ length: NUM_QUOTES }, makeQuote);
+const freelancers = Array.from({ length: NUM_FREELANCERS }, makeFreelancer);
