@@ -11,6 +11,7 @@ const OCCUPATIONS = ["Writer", "Teacher", "Programmer", "Designer", "Engineer"];
 const PRICE_RANGE = { min: 20, max: 200 };
 const NUM_FREELANCERS = 100;
 
+// === State ===
 /** @returns {Freelancer} a Freelancer profile object with name, occupation, rate. */
 function makeFreelancer() {
   const name = NAMES[Math.floor(Math.random() * NAMES.length)];
