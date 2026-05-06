@@ -40,10 +40,7 @@ function getAverageFreelancerRate(freelancers) {
 }
 
 // === Components ===
-/**
- * A single card with a quote and its author
- * @param {Freelancer} quote
- */
+
 function FreelancerRow({ name, occupation, rate }) {
   const $tr = document.createElement("tr");
   $tr.classList.add("freelancer");
@@ -53,4 +50,11 @@ function FreelancerRow({ name, occupation, rate }) {
     <td>${rate}</td>
   `;
   return $tr;
+}
+
+function FreelancerRows() {
+  const $tbody = document.createElement("tbody");
+  const $freelancers = freelancers.map(FreelancerRow);
+  $tbody.replaceChildren(...$freelancers);
+  return $tbody;
 }
