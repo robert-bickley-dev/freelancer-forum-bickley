@@ -16,9 +16,8 @@ const NUM_FREELANCERS = 100;
  * @returns {Freelancer} a freelancer profile object with name, occupation, rate.
  */
 function makeFreelancer() {
-  const name = NAMES[Math.floor(Math.random() * NAMES.length)];
-  const occupation =
-    OCCUPATIONS[Math.floor(Math.random() * OCCUPATIONS.length)];
+  const name = sample(NAMES);
+  const occupation = sample(OCCUPATIONS);
   const rate =
     PRICE_RANGE.min +
     Math.floor(Math.random() * (PRICE_RANGE.max - PRICE_RANGE.min));
@@ -26,6 +25,7 @@ function makeFreelancer() {
 }
 
 const freelancers = Array.from({ length: NUM_FREELANCERS }, makeFreelancer);
+const averageRate = getAverageFreelancerRate(freelancers);
 
 /**
  * @param {Freelancer[]} freelancers array of freelancer objects
@@ -36,21 +36,21 @@ function getAverageFreelancerRate(freelancers) {
     (sum, freelancer) => sum + freelancer.rate,
     0,
   );
-  const averageRates = totalRates / freelancers.length;
-  return averageRates;
+  averageRate = totalRates / freelancers.length;
 }
 
 // === Components ===
 /**
  * A single card with a quote and its author
- * @param {Quote} quote
+ * @param {Freelancer} quote
  */
-function QuoteCard(quote) {
-  const $quote = document.createElement("figure");
-  $quote.classList.add("quote");
-  $quote.innerHTML = `
-    <blockquote>${quote.sentence}</blockquote>
-    <figcaption>${quote.author}</figcaption>
+function FreelancerRow({ name, occupation, rate }) {
+  const $tr = document.createElement("tr");
+  $tr.classList.add("freelancer");
+  $tr.innerHTML = `
+    <td>${name}</td>
+    <td>${occupation}</td>
+    <td>${rate}</td>
   `;
-  return $quote;
+  return $tr;
 }
