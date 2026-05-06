@@ -12,31 +12,32 @@ const PRICE_RANGE = { min: 20, max: 200 };
 const NUM_FREELANCERS = 100;
 
 // === State ===
-/**
- * @returns {Freelancer} a freelancer profile object with name, occupation, rate.
- */
+const freelancers = Array.from({ length: NUM_FREELANCERS }, makeFreelancer);
+const averageRate = getAverageRate();
+
+/** @returns {Freelancer} a freelancer profile object with name, occupation, rate. */
 function makeFreelancer() {
   const name = sample(NAMES);
   const occupation = sample(OCCUPATIONS);
   const rate =
     PRICE_RANGE.min +
     Math.floor(Math.random() * (PRICE_RANGE.max - PRICE_RANGE.min));
+
   return { name, occupation, rate };
 }
 
-const freelancers = Array.from({ length: NUM_FREELANCERS }, makeFreelancer);
-const averageRate = getAverageFreelancerRate(freelancers);
-
-/**
- * @param {Freelancer[]} freelancers array of freelancer objects
- * @returns {number} the average rate across the given freelancers
- */
-function getAverageFreelancerRate(freelancers) {
+/** @returns {number} the average rate across the given freelancers */
+function getAverageRate() {
   const totalRates = freelancers.reduce(
     (sum, freelancer) => sum + freelancer.rate,
     0,
   );
-  averageRate = totalRates / freelancers.length;
+  return totalRates / freelancers.length;
+}
+
+/** @returns a single element randomly from the given array */
+function sample(array) {
+  return array[Math.floor(Math.random() * array.length)];
 }
 
 // === Components ===
@@ -64,3 +65,28 @@ function AverageRate() {
   $p.textContent = `The average rate is $${averageRate.toFixed(2)}.`;
   return $p;
 }
+
+// === Render ===
+function render() {
+  const $app = document.querySelector("#app");
+
+  $app.innerHTML = `
+  <h1>Freelancer Forum</h1>
+  <AverageRate></AverageRate>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Occupation</th>
+        <th>Rate</th>
+      </tr>
+    </thead>
+    <tbody id="FreelancerRows"></tbody>
+  </table>
+`;
+
+  $app.querySelector("AverageRate").replaceWith(AverageRate());
+  $app.querySelector("#FreelancerRows").replaceWith(FreelancerRows());
+}
+
+render();
