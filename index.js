@@ -58,3 +58,9 @@ function FreelancerRows() {
   $tbody.replaceChildren(...$freelancers);
   return $tbody;
 }
+
+function AverageRate() {
+  const $p = document.createElement("p");
+  $p.textContent = `The average rate is $${averageRate.toFixed(2)}.`;
+  return $p;
+}
